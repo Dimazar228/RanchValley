@@ -2,7 +2,9 @@ import pygame
 from settings import *
 from player import Player
 from overlay import Overlay
-from sprites import Generic
+from sprites import Generic, Water
+from pytmx.util_pygame import load_pygame
+from support import *
 
 
 class Level:
@@ -17,6 +19,30 @@ class Level:
         self.overlay = Overlay(self.player)
 
     def setup(self):
+        tmx_data = load_pygame('../data/map.tmx')
+
+        # House
+        for layer in ['HouseFloor', 'HouseFurnitureBottom']:
+            for x, y, surface in tmx_data.get_layer_by_name(layer).tiles():
+                Generic((x * TILE_SIZE, y * TILE_SIZE), surface, self.all_sprites,
+                        LAYERS['house bottom'])
+
+        for layer in ['HouseWalls', 'HouseFurnitureTop']:
+            for x, y, surface in tmx_data.get_layer_by_name('Fence').tiles():
+                Generic((x * TILE_SIZE, y * TILE_SIZE), surface, self.all_sprites)
+        # Fence
+        for x, y, surface in tmx_data.get_layer_by_name(layer).tiles():
+            Generic((x * TILE_SIZE, y * TILE_SIZE), surface, self.all_sprites,
+                    LAYERS['main'])
+
+        # water
+        water_frames = import_folder('../graphics/water')
+        for x, y, surface in tmx_data.get_layer_by_name('Water').tiles():
+            Water((x * TILE_SIZE, y * TILE_SIZE), water_frames, self.all_sprites)
+        # trees
+
+        # flowers
+
         self.player = Player((640, 360), self.all_sprites)  # DON'T FORGET TO CHANGE THIS VALUE
         Generic(
             pos=(0, 0),
