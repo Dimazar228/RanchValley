@@ -551,7 +551,7 @@
    <point/>
   </object>
   <object id="254" name="Trader" x="895" y="379.667" width="192" height="131.333"/>
-  <object id="256" name="Bed" x="1407.17" y="1276.83" width="63.6667" height="66.3333"/>
+  <object id="256" name="Bed" x="1408.5" y="1279.5" width="63.6667" height="65"/>
  </objectgroup>
  <objectgroup id="7" name="Objects">
   <object id="2" gid="147" x="432" y="948" width="56" height="112"/>

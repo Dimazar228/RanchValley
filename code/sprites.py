@@ -13,6 +13,13 @@ class Generic(pygame.sprite.Sprite):
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.75)
 
 
+class Interaction(Generic):
+    def __init__(self, pos, size, group, name):
+        surface = pygame.Surface(size)
+        super().__init__(pos, surface, group)
+        self.name = name
+
+
 class Water(Generic):
     def __init__(self, pos, frames, group):
         # animation setup
@@ -41,8 +48,26 @@ class Flowers(Generic):
         self.hitbox = self.rect.copy().inflate(-20, -self.rect.height * 0.9)
 
 
+class Particle(Generic):
+    def __init__(self, pos, surface, group, z, duration=200):
+        super().__init__(pos, surface, group, z)
+        self.start_time = pygame.time.get_ticks()
+        self.duration = duration
+
+        # white surface
+        mask_surface = pygame.mask.from_surface(self.image)
+        new_surface = mask_surface.to_surface()
+        new_surface.set_colorkey((0, 0, 0))
+        self.image = new_surface
+
+    def update(self, dt):
+        current_time = pygame.time.get_ticks()
+        if current_time - self.start_time > self.duration:
+            self.kill()
+
+
 class Tree(Generic):
-    def __init__(self, pos, surface, group, name):
+    def __init__(self, pos, surface, group, name, player_add):
         super().__init__(pos, surface, group)
 
         # tree attributes
@@ -59,6 +84,8 @@ class Tree(Generic):
         self.apple_sprites = pygame.sprite.Group()
         self.create_fruit()
 
+        self.player_add = player_add
+
     def damage(self):
 
         # damaging the tree
@@ -67,14 +94,21 @@ class Tree(Generic):
         # remove an apple
         if len(self.apple_sprites.sprites()) > 0:
             random_apple = choice(self.apple_sprites.sprites())
+            Particle(pos=random_apple.rect.topleft,
+                     surface=random_apple.image,
+                     group=self.groups()[0],
+                     z=LAYERS['fruit'])
+            self.player_add('apple')
             random_apple.kill()
 
     def check_death(self):
         if self.health <= 0:
+            Particle(self.rect.topleft, self.image, self.groups()[0], LAYERS['fruit'], 300)
             self.image = self.stump_surface
             self.rect = self.image.get_rect(midbottom=self.rect.midbottom)
             self.hitbox = self.rect.copy().inflate(-10, -self.rect.height * 0.6)
             self.alive = False
+            self.player_add('wood')
 
     def update(self, dt):
         if self.alive:
