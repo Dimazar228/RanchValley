@@ -104,7 +104,7 @@ class Level:
     def run(self, dt):
         self.display_surface.fill('black')
         self.all_sprites.customize_draw(self.player)
-        self.all_sprites.update(dt)q
+        self.all_sprites.update(dt)
 
         self.overlay.display()
 
