@@ -15,7 +15,7 @@ PLAYER_TOOL_OFFSET = {
     'left': Vector2(-50, 40),
     'right': Vector2(50, 40),
     'up': Vector2(0, -10),
-    'down': Vector2(0, 50)  # ?
+    'down': Vector2(0, 50)
 }
 
 LAYERS = {
@@ -45,8 +45,8 @@ GROW_SPEED = {
 SALE_PRICES = {
     'wood': 4,
     'apple': 2,
-    'corn': 10,
-    'tomato': 20
+    'corn': 6,
+    'tomato': 9
 }
 PURCHASE_PRICES = {
     'corn': 4,

@@ -68,8 +68,8 @@ class Player(pygame.sprite.Sprite):
         self.toggle_shop = toggle_shop
 
         # sound
-        self.watering = pygame.mixer.Sound('../audio/water.mp3')
-        self.watering.set_volume(0.1)
+        self.watering = pygame.mixer.Sound('../audio/water.wav')
+        self.watering.set_volume(0.8)
 
     def use_tool(self):
 
@@ -116,19 +116,19 @@ class Player(pygame.sprite.Sprite):
 
         if not self.timers['tool use'].active and not self.sleep:
             # directions
-            if keys[pygame.K_UP]:
+            if keys[pygame.K_w] or keys[pygame.K_UP]:
                 self.direction.y = -1
                 self.status = 'up'
-            elif keys[pygame.K_DOWN]:
+            elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
                 self.direction.y = 1
                 self.status = 'down'
             else:
                 self.direction.y = 0
 
-            if keys[pygame.K_RIGHT]:
+            if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
                 self.direction.x = 1
                 self.status = 'right'
-            elif keys[pygame.K_LEFT]:
+            elif keys[pygame.K_a] or keys[pygame.K_LEFT]:
                 self.direction.x = -1
                 self.status = 'left'
             else:
@@ -144,25 +144,25 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_q] and not self.timers['tool switch'].active:
                 self.timers['tool switch'].activate()
                 self.tool_index += 1
-                if self.tool_index >= len(self.tools):  # You can change this is !?
+                if self.tool_index >= len(self.tools):
                     self.tool_index = 0
                 self.selected_tool = self.tools[self.tool_index]
 
             # seed use
-            if keys[pygame.K_LCTRL]:
+            if keys[pygame.K_f]:
                 self.timers['seed use'].activate()
                 self.direction = pygame.math.Vector2()
                 self.frame_index = 0
 
             # change seed
-            if keys[pygame.K_e] and not self.timers['seed switch'].active:
+            if keys[pygame.K_r] and not self.timers['seed switch'].active:
                 self.timers['seed switch'].activate()
                 self.seed_index += 1
-                if self.seed_index >= len(self.seeds):  # You can change this is !?
+                if self.seed_index >= len(self.seeds):
                     self.seed_index = 0
                 self.selected_seed = self.seeds[self.seed_index]
 
-            if keys[pygame.K_RETURN]:
+            if keys[pygame.K_e]:
                 collided_interaction_sprite = pygame.sprite.spritecollide(self, self.interaction,
                                                                           False)
                 if collided_interaction_sprite:

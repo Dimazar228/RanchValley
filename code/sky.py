@@ -10,12 +10,12 @@ class Sky:
         self.display_surface = pygame.display.get_surface()
         self.full_surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.start_color = [255, 255, 255]
-        self.end_color = (38, 101, 189)
+        self.end_color = (38, 81, 189)
 
     def display(self, dt):
         for index, value in enumerate(self.end_color):
             if self.start_color[index] > value:
-                self.start_color[index] -= 2 * dt
+                self.start_color[index] -= 1 * dt
         self.full_surface.fill(self.start_color)
         self.display_surface.blit(self.full_surface, (0, 0), special_flags= pygame.BLEND_RGBA_MULT)
 

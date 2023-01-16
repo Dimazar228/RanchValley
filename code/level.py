@@ -41,9 +41,8 @@ class Level:
         # sound
         self.success = pygame.mixer.Sound('../audio/success.wav')
         self.success.set_volume(0.3)
-        self.music = pygame.mixer.Sound('../audio/music.mp3')
+        self.music = pygame.mixer.Sound('../audio/music1.mp3')
         self.music.play(loops=-1)
-        self.music.set_volume(0.6)
 
     def setup(self):
         tmx_data = load_pygame('../data/map.tmx')
@@ -92,7 +91,6 @@ class Level:
                                      interaction=self.interaction_sprites,
                                      soil_layer=self.soil_layer,
                                      toggle_shop=self.toggle_shop)
-                # DON'T FORGET TO CHANGE THIS VALUE
             if obj.name == 'Bed':
                 Interaction((obj.x, obj.y), (obj.width, obj.height), self.interaction_sprites,
                             obj.name)
@@ -100,7 +98,6 @@ class Level:
             if obj.name == "Trader":
                 Interaction((obj.x, obj.y), (obj.width, obj.height), self.interaction_sprites,
                             obj.name)
-
 
         Generic(
             pos=(0, 0),
@@ -161,18 +158,14 @@ class Level:
 
         # weather
         self.overlay.display()
-
         # rain
-        if self.raining and not self.shop_active:  # if RAIN STOPPED DELETE THE SELF.SHOP_ACTIVE
+        if self.raining and not self.shop_active:
             self.rain.update()
-
         # daytime
         self.sky.display(dt)
-
         # transition overlay
         if self.player.sleep:
             self.transition.play()
-
 
 
 class CameraGroup(pygame.sprite.Group):

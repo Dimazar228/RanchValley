@@ -71,12 +71,11 @@ class Tree(Generic):
         super().__init__(pos, surface, group)
 
         # tree attributes
-        self.health = 3
+        self.health = 4
         self.alive = True
         stump_path = f'''../graphics/stumps/{"small"
         if name == "Small" else "large"}.png'''
-        self.stump_surface = pygame.image.load(stump_path)  # Пенек DON'T FORGET TO CHANGE THIS VALUE
-        self.hit_timer = Timer(200)  # IF I WANT TO CHANGE THIS  TIMER
+        self.stump_surface = pygame.image.load(stump_path)
 
         # apples
         self.apples_surface = pygame.image.load('../graphics/fruit/apple.png')
@@ -87,7 +86,7 @@ class Tree(Generic):
         self.player_add = player_add
 
         # sounds
-        self.axe_sound = pygame.mixer.Sound('../audio/axe.mp3')
+        self.axe_sound = pygame.mixer.Sound('../audio/axe.wav')
 
     def damage(self):
 

@@ -61,11 +61,11 @@ class Menu:
             self.toggle_menu()
 
         if not self.timer.active:
-            if keys[pygame.K_UP]:
+            if keys[pygame.K_w] or keys[pygame.K_UP]:
                 self.index -= 1
                 self.timer.activate()
 
-            if keys[pygame.K_DOWN]:
+            if keys[pygame.K_s] or keys[pygame.K_DOWN]:
                 self.index += 1
                 self.timer.activate()
 
